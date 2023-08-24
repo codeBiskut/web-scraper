@@ -13,12 +13,19 @@ axios.get(target)
         const $ = cheerio.load(html);
 
         let content = [];
-        
-        $('ul').find('li').each((index, element) => {
-            content.push($(element).text())
+
+        $('h4').each(function (){
+            const unit = $(this).text();
+
+            content.push({
+                unit
+            });
+
+            app.get('/', (req, res) =>{
+                res.json(content)
+            });
         });
 
-        console.log(content)
     })
     .catch(error => {
         console.error('Error fetching or parsing the page:', error);
